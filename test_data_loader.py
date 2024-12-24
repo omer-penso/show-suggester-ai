@@ -1,5 +1,5 @@
 import pandas as pd
-from data_loader import load_csv_file, load_tv_show_names_from_csv
+from data_loader import load_csv_file, load_column_from_csv
 
 
 def test_load_csv_file():
@@ -16,15 +16,18 @@ Breaking Bad,"A high school teacher turned meth producer.","Crime, Drama, Thrill
     assert "Description" in df.columns
 
 
-def test_load_tv_show_names_from_csv():
+def test_load_column_from_csv():
     csv_content = """Title,Description,Genres
 Game of Thrones,"A fantasy drama.","Action, Adventure, Drama"
 Breaking Bad,"A high school teacher turned meth producer.","Crime, Drama, Thriller"
 """
     with open("mock_tv_shows.csv", "w") as f:
         f.write(csv_content)
-
     
-    tv_show_names = load_tv_show_names_from_csv("mock_tv_shows.csv")
+    tv_show_names = load_column_from_csv("mock_tv_shows.csv", "Title")
     assert isinstance(tv_show_names, list)
     assert tv_show_names == ["Game of Thrones", "Breaking Bad"]
+
+    genres = load_column_from_csv("mock_tv_shows.csv", "Genres")
+    assert isinstance(genres, list)
+    assert genres == ["Action, Adventure, Drama", "Crime, Drama, Thriller"]

@@ -11,14 +11,16 @@ def load_csv_file(csv_file):
         raise ValueError(f"Error loading CSV file from {csv_file}: {e}")
 
 
-def load_tv_show_names_from_csv(csv_file):
+def load_column_from_csv(csv_file, column_name):
     """
-    Extract the TV show titles from the CSV file.
+    Extract a specific column from the CSV file.
     """
     try:
-        df = load_csv_file(csv_file)  
-        return df["Title"].tolist()  
-    except KeyError:
-        raise ValueError(f"The 'Title' column is missing in {csv_file}")
+        df = load_csv_file(csv_file)
+        if column_name not in df.columns:
+            raise KeyError(f"The column '{column_name}' does not exist in the CSV file.")  
+        return df[column_name].dropna().tolist()  
+    except KeyError as e:
+        raise ValueError(e)
     except Exception as e:
-        raise ValueError(f"Error extracting TV show names from {csv_file}: {e}")
+        raise ValueError(f"Error extracting column '{column_name}' from {csv_file}: {e}")
