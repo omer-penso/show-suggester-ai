@@ -1,20 +1,25 @@
 import numpy as np
 import logging
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(module)s - %(funcName)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
 logger = logging.getLogger(__name__)
 
 
 def get_user_vectors(user_shows, embeddings):
     """
-    Retrieve the embedding vectors for the user-selected shows.
+    Retrieve the embedding vectors of the user-selected shows.
     """
     user_vectors = []
     for show in user_shows:
-        vector = embeddings.get(show)  # Use .get() for safe key retrieval
+        vector = embeddings.get(show)
         if vector:
             user_vectors.append(vector)
         else:
-            logger.warning(f"Show '{show}' not found in embeddings dictionary.")
+            logger.error(f"Show '{show}' not found in embeddings dictionary.")
     return user_vectors
 
 

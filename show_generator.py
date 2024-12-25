@@ -5,7 +5,11 @@ import logging
 import json
 from openai import OpenAI
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(module)s - %(funcName)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
 logger = logging.getLogger(__name__)
 
 
@@ -42,14 +46,3 @@ def generate_new_shows(user_input_shows, api_key):
     except Exception as e:
         logger.error(f"Error generating new TV shows: {e}")
         raise
-
-
-# Testing the module
-if __name__ == "__main__":
-    user_loved_shows = ["Game of Thrones", "Breaking Bad", "Stranger Things"]
-    generated_shows = generate_new_shows(user_loved_shows)
-    print("--------------------------------------")
-    print("Generated TV Shows:")
-    for show in generated_shows:
-        print(f"name: {show['name']}")
-        print(f"description: {show['description']}")
