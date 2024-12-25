@@ -2,9 +2,6 @@ from openai import OpenAI
 import logging
 import pickle
 import os
-from dotenv import load_dotenv
-from data_loader import load_column_from_csv
-
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -63,19 +60,3 @@ def ensure_embeddings(titles, descriptions, file_name, api_key, model="text-embe
 
 
 
-if __name__ == "__main__":
-    load_dotenv()  
-
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        raise ValueError("OpenAI API key not found. Ensure OPENAI_API_KEY is set in the .env file.")
-
-    csv_file = "tv_shows.csv"  
-    titles = load_column_from_csv(csv_file, "Title")
-    descriptions = load_column_from_csv(csv_file, "Description")
-
-    embeddings_file = "tv_show_embeddings.pkl"
-
-    logger.info("Generating embeddings for TV show descriptions...")
-    ensure_embeddings(titles, descriptions, embeddings_file, api_key)
-    logger.info("Embeddings process completed successfully.")

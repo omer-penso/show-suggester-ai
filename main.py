@@ -2,6 +2,7 @@ from data_loader import load_csv_file
 from embeddings import ensure_embeddings
 from user_input import validate_user_input
 from recommendations import compute_average_vector, find_top_recommendations, get_user_vectors
+from show_generator import generate_new_shows
 from dotenv import load_dotenv
 import logging
 import os
@@ -51,6 +52,13 @@ if __name__ == "__main__":
         print("Here are the TV shows I think you would love:")
         for idx, (show, percentage) in enumerate(recommendations, start=1):
             print(f"{idx}. {show} ({percentage}%)")
+
+        # Step 8: generate new shows based on user input using OpenAI
+        generated_shows = generate_new_shows(user_shows, openai_api_key)
+        show1_name = generated_shows[0]['name']
+        show1_description = generated_shows[0]['description']
+        show2_name = generated_shows[1]['name']
+        show2_description = generated_shows[1]['description']
 
     except Exception as e:
         logger.critical(f"Unexpected error: {e}")
