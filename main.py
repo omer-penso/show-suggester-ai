@@ -3,6 +3,7 @@ from embeddings import ensure_embeddings
 from user_input import validate_user_input
 from recommendations import compute_average_vector, find_top_recommendations, get_user_vectors
 from show_generator import generate_new_shows
+from image_generator import generate_image_for_show
 from dotenv import load_dotenv
 import logging
 import os
@@ -19,6 +20,11 @@ if __name__ == "__main__":
     try:
         load_dotenv()
 
+        # Load the LightX API key
+        lightx_api_key = os.getenv("LIGHTX_API_KEY")
+        if not lightx_api_key:
+            raise ValueError("LightX API key not found. Ensure LIGHTX_API_KEY is set in the .env file")
+        
         # Retrieve OpenAI API key
         openai_api_key = os.getenv("OPENAI_API_KEY")
         if not openai_api_key:
@@ -60,6 +66,12 @@ if __name__ == "__main__":
         show2_name = generated_shows[1]['name']
         show2_description = generated_shows[1]['description']
 
+        # Step 9: Generate images for the new shows using LightX API
+        saved_image_path_show1 = generate_image_for_show(show1_name, show1_description, "show1.png", lightx_api_key)
+        print(f"Image for '{show1_name}' saved to: {saved_image_path_show1}")
+        saved_image_path_show2 = generate_image_for_show(show2_name, show2_description, "show2.png", lightx_api_key)
+        print(f"Image for '{show2_name}' saved to: {saved_image_path_show2}")
+        
     except Exception as e:
         logger.critical(f"Unexpected error: {e}")
         print("A critical error occurred. Please check the logs for more details.")
