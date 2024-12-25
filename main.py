@@ -67,9 +67,9 @@ if __name__ == "__main__":
         show2_description = generated_shows[1]['description']
 
         # Step 9: Generate images for the new shows using LightX API
-        saved_image_path_show1 = generate_image_for_show(show1_name, show1_description, "show1.png", lightx_api_key)
+        #saved_image_path_show1 = generate_image_for_show(show1_name, show1_description, "show1.png", lightx_api_key)
         print(f"Image for '{show1_name}' saved to: {saved_image_path_show1}")
-        saved_image_path_show2 = generate_image_for_show(show2_name, show2_description, "show2.png", lightx_api_key)
+        #saved_image_path_show2 = generate_image_for_show(show2_name, show2_description, "show2.png", lightx_api_key)
         print(f"Image for '{show2_name}' saved to: {saved_image_path_show2}")
         
     except Exception as e:

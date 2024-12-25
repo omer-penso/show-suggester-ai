@@ -57,6 +57,3 @@ def ensure_embeddings(titles, descriptions, file_name, api_key, model="text-embe
         embeddings = generate_embeddings(titles, descriptions, api_key, model)
         save_embeddings(embeddings, file_name)
         return embeddings
-
-
-

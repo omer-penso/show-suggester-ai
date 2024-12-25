@@ -10,8 +10,9 @@ def get_user_vectors(user_shows, embeddings):
     """
     user_vectors = []
     for show in user_shows:
-        if show in embeddings:
-            user_vectors.append(embeddings[show])
+        vector = embeddings.get(show)  # Use .get() for safe key retrieval
+        if vector:
+            user_vectors.append(vector)
         else:
             logger.warning(f"Show '{show}' not found in embeddings dictionary.")
     return user_vectors
